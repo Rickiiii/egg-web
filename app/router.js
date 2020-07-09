@@ -11,8 +11,9 @@ const ROUTE_DATA_SOURCE = {
     { method: 'all', route: 'list' },
     { method: 'get', route: 'user', controller: 'index' },
     { method: 'post', route: 'add' },
-    { method: 'post', route: 'update' },
-    { method: 'post', route: 'delete' },
+    { method: 'all', route: 'update' },
+    { method: 'all', route: 'delete' },
+    { method: 'all', route: 'userById' },
   ],
   home: [
     { method: 'get' },
@@ -33,7 +34,7 @@ function createRouter(app) {
     const Router = router.namespace(`/${firstRoute}`);
     ROUTE_DATA_SOURCE[firstRoute].forEach(item => {
       const useController = controller[firstRoute][item.controller || item.route || 'index'];
-      console.log(firstRoute, item);
+      console.log(useController);
       item.method === 'all' ? allMethod(`/${item.route || ''}`, useController, Router) : Router[item.method](`/${item.route || ''}`, useController);
     });
   }

@@ -2,6 +2,14 @@
 
 const Controller = require('egg').Controller;
 
+const createRule = {
+  id: {
+    type: 'string',
+    require: true,
+    max: 10,
+  },
+};
+
 class UserController extends Controller {
   async index() {
     const { ctx } = this;
@@ -30,7 +38,7 @@ class UserController extends Controller {
     const params = {
       ...ctx.request.body,
     };
-    console.log(ctx.request.body);
+    console.log(ctx.query);
     const result = await ctx.service.user.add(params);
     if (result) {
       ctx.body = {
@@ -67,11 +75,12 @@ class UserController extends Controller {
   async delete() {
     const { ctx } = this;
     const { id } = ctx.request.body;
+    ctx.validate(createRule, ctx.request.body);
     const result = await ctx.service.user.delete(id);
     if (result) {
       ctx.body = {
         status: 200,
-        data: result,
+        data: ctx.helper,
       };
     } else {
       ctx.body = {

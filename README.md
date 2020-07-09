@@ -1,5 +1,4 @@
-# demo
-
+# PS4 Game Info ----- By Egg.js
 
 
 ## QuickStart
