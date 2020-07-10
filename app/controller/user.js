@@ -20,11 +20,9 @@ class UserController extends Controller {
   async list() {
     const { ctx } = this;
     const result = await ctx.service.user.list();
+
     if (result) {
-      ctx.body = {
-        status: 200,
-        data: result,
-      };
+      this.ctx.helper.success({ ctx, code: 200, res: result, msg: '请求成功' });
     } else {
       ctx.body = {
         status: 500,
@@ -38,18 +36,11 @@ class UserController extends Controller {
     const params = {
       ...ctx.request.body,
     };
-    console.log(ctx.query);
     const result = await ctx.service.user.add(params);
     if (result) {
-      ctx.body = {
-        status: 200,
-        data: result,
-      };
+      this.ctx.helper.success({ ctx, code: 200, res: 'success', msg: '请求成功' });
     } else {
-      ctx.body = {
-        status: 500,
-        errMsg: '添加失败',
-      };
+      this.ctx.helper.fail({ ctx, code: 500, res: '参数错误', msg: '请求失败' });
     }
   }
 

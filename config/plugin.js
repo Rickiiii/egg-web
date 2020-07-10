@@ -14,10 +14,6 @@ module.exports = {
     enable: true,
     package: 'egg-router-plus',
   },
-  helper: {
-    enable: true,
-    package: 'egg-helper',
-  },
   validate: {
     enable: true,
     package: 'egg-validate',
