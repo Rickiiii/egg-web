@@ -7,17 +7,21 @@
  * @param {String} controller 选填 不填的话自动去route的参数
  */
 const ROUTE_DATA_SOURCE = {
-  user: [
-    { method: 'all', route: 'list' },
-    { method: 'get', route: 'user', controller: 'index' },
-    { method: 'post', route: 'add' },
-    { method: 'all', route: 'update' },
-    { method: 'all', route: 'delete' },
-    { method: 'all', route: 'userById' },
-  ],
-  home: [
+  // user: [
+  //   { method: 'all', route: 'list' },
+  //   { method: 'get', route: 'user', controller: 'index' },
+  //   { method: 'post', route: 'add' },
+  //   { method: 'all', route: 'update' },
+  //   { method: 'all', route: 'delete' },
+  //   { method: 'all', route: 'userById' },
+  // ],
+  // home: [
+  //   { method: 'get' },
+  //   { method: 'get', route: 'text' },
+  // ],
+  article: [
+    { method: 'get', route: 'list' },
     { method: 'get' },
-    { method: 'get', route: 'text' },
   ],
 };
 

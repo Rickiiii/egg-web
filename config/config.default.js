@@ -21,9 +21,9 @@ module.exports = appInfo => {
         // 用户名
         user: 'root',
         // 密码
-        password: '123456',
+        password: 'ruijiang132',
         // 数据库名
-        database: 'user',
+        database: 'rickiWeb',
       },
       // 是否加载到 app 上，默认开启
       app: true,
@@ -33,7 +33,13 @@ module.exports = appInfo => {
     security: {
       csrf: {
         enable: false,
+        ignoreJSON: true,
       },
+    },
+    domainWhiteList: [ '*' ],
+    cors: {
+      origin: '*',
+      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
     },
   };
 
@@ -44,7 +50,7 @@ module.exports = appInfo => {
   config.middleware = [ 'errorHandler' ];
 
   config.errorHandler = {
-    match: '/user',
+    match: '/article',
   };
 
   // add your user config here
