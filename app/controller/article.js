@@ -1,36 +1,71 @@
 'use strict';
 
+const moment = require('moment');
 const Controller = require('egg').Controller;
 
 class ArticleController extends Controller {
-  async index() {
-    const { ctx } = this;
-    ctx.body = 'hi, eggss';
-  }
-
-  async text() {
-    const { ctx } = this;
-    ctx.body = 'text';
-  }
-
+  // get 文章列表
   async list() {
     const { ctx } = this;
-    let result = await ctx.service.article.list();
+    const params = ctx.query;
+    const result = await ctx.service.article.list(params);
 
     if (result) {
-      if (Array.isArray(result)) {
-        result = result.map(item => ({
+      if (Array.isArray(result.list)) {
+        result.list = result.list.map(item => ({
           ...item,
           commentsNum: item.comment.length || 0,
-          time: this.ctx.helper.formatTimeStamp(item.time, 'm'),
+          time: this.ctx.helper.formatTimeStamp(item.time, 's'),
         }));
       }
-      this.ctx.helper.success({ ctx, code: 200, res: result, msg: '请求成功' });
+      this.ctx.helper.success({ ctx, res: result });
     } else {
       ctx.body = {
         status: 500,
         errMsg: '获取失败',
       };
+    }
+  }
+
+  // post 创建文章
+  async create() {
+    const { ctx } = this;
+    const params = {
+      ...ctx.request.body,
+      comment: '',
+      time: moment().format('YYYY-MM-DD h:mm:ss'),
+    };
+    const result = await ctx.service.article.create(params);
+    if (result) {
+      ctx.helper.success({ ctx });
+    } else {
+      ctx.helper.fail({ ctx });
+    }
+  }
+
+  // post 更新文章
+  async update() {
+    const { ctx } = this;
+    const params = {
+      ...ctx.request.body,
+    };
+    const result = await ctx.service.article.update(params);
+    if (result) {
+      ctx.helper.success({ ctx });
+    } else {
+      ctx.helper.fail({ ctx });
+    }
+  }
+
+  // get 获取单篇文章详情
+  async getOne() {
+    const { ctx } = this;
+    const params = ctx.query;
+    const result = await ctx.service.article.getOne(params);
+    if (result) {
+      ctx.helper.success({ ctx, res: result });
+    } else {
+      ctx.helper.fail({ ctx });
     }
   }
 }

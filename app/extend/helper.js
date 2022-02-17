@@ -21,7 +21,7 @@ module.exports = {
     504: '网关超时。',
   },
 
-  success: ({ ctx, code, res = null, msg = '' }) => {
+  success: ({ ctx, code = 0, res = 'success', msg = '请求成功' }) => {
     ctx.status = 200;
     ctx.body = {
       code,
@@ -30,11 +30,11 @@ module.exports = {
     };
   },
 
-  fail: ({ ctx, code = 500, res = null, msg = '' }) => {
-    ctx.status = 200;
+  fail: ({ ctx, code = 500, res = '参数错误', msg = ctx.helper.errorCode[code] }) => {
+    ctx.status = 500;
     ctx.body = {
       code,
-      message: msg || ctx.helper.errorCode[code],
+      message: msg,
       data: {
         error: res,
       },

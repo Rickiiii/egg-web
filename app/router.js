@@ -21,7 +21,9 @@ const ROUTE_DATA_SOURCE = {
   // ],
   article: [
     { method: 'get', route: 'list' },
-    { method: 'get' },
+    { method: 'post', route: 'create' },
+    { method: 'get', route: 'getOne' },
+    { method: 'post', route: 'update' },
   ],
 };
 
