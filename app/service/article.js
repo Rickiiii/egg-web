@@ -6,11 +6,12 @@ const Service = require('egg').Service;
 class ArticleService extends Service {
   async list(params) {
     const { app } = this;
-    const { page, pageSize, type } = params;
+    const { page = 1, pageSize = 5, type } = params;
     try {
       const searchParams = { orders: [[ 'id', 'desc' ]] };
       if (parseInt(type)) { searchParams.where = { type: parseInt(type) }; }
       const allList = JSON.parse(JSON.stringify(await app.mysql.select('article', searchParams)));
+      console.log(allList, 'allList');
       const list = allList.slice((parseInt(page) - 1) * pageSize, parseInt(page) * pageSize);
       const result = {
         total: allList.length,
@@ -18,6 +19,7 @@ class ArticleService extends Service {
         pageSize: parseInt(pageSize),
         page: parseInt(page),
       };
+      console.log(result, 'reuslt');
       return result;
     } catch (error) {
       console.log(error);
