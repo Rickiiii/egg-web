@@ -11,7 +11,6 @@ class ArticleService extends Service {
       const searchParams = { orders: [[ 'id', 'desc' ]] };
       if (parseInt(type)) { searchParams.where = { type: parseInt(type) }; }
       const allList = JSON.parse(JSON.stringify(await app.mysql.select('article', searchParams)));
-      console.log(allList, 'allList');
       const list = allList.slice((parseInt(page) - 1) * pageSize, parseInt(page) * pageSize);
       const result = {
         total: allList.length,
@@ -19,7 +18,6 @@ class ArticleService extends Service {
         pageSize: parseInt(pageSize),
         page: parseInt(page),
       };
-      console.log(result, 'reuslt');
       return result;
     } catch (error) {
       console.log(error);
@@ -53,6 +51,26 @@ class ArticleService extends Service {
     const { app } = this;
     try {
       const result = await app.mysql.get('article', { id: params.id });
+      result.comment = JSON.parse(result.comment);
+      result.tags = JSON.parse(result.tags);
+      return result;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  async addComment(params) {
+    const { app } = this;
+    const { id, comment } = params;
+    try {
+      const detail = await app.mysql.get('article', { id });
+      const newComment = JSON.stringify(JSON.parse(detail.comment).concat(comment));
+      const result = await app.mysql.update('article', {
+        comment: newComment,
+      }, {
+        where: { id },
+      });
       return result;
     } catch (error) {
       console.log(error);

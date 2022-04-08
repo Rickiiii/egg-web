@@ -24,6 +24,7 @@ const ROUTE_DATA_SOURCE = {
     { method: 'post', route: 'create' },
     { method: 'get', route: 'getOne' },
     { method: 'post', route: 'update' },
+    { method: 'post', route: 'addComment' },
   ],
 };
 

@@ -68,6 +68,20 @@ class ArticleController extends Controller {
       ctx.helper.fail({ ctx });
     }
   }
+
+  // 文章评论
+  async addComment() {
+    const { ctx } = this;
+    const params = {
+      ...ctx.request.body,
+    };
+    const result = await ctx.service.article.addComment(params);
+    if (result) {
+      ctx.helper.success({ ctx });
+    } else {
+      ctx.helper.fail({ ctx });
+    }
+  }
 }
 
 module.exports = ArticleController;
